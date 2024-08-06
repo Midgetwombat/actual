@@ -34,13 +34,14 @@ export async function payDistribution(
       increment = currentBudgeted + payToDistribute;
     } else {
       errors.push('not enough funds to distribute');
-      increment = currentBudgeted;
+      increment = 0;
     }
   } else {
     increment += currentBudgeted;
   }
 
-  set_budget += increment;
+  set_budget = increment === 0 ? currentBudgeted : set_budget + increment;
+  
   return {
     to_budget,
     errors,
